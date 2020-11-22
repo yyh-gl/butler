@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	lowerLimit float64 = 50
-	upperLimit float64 = 65
+	lowerLimit float64 = 40
+	upperLimit float64 = 60
 )
 
 type humidityNotification struct {
