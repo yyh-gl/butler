@@ -55,6 +55,7 @@ func (hn *humidityNotification) fetchHumidity(ctx context.Context) (float64, err
 	if err != nil {
 		return 0, err
 	}
+	defer func() { _ = resp.Body.Close() }()
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return 0, err
