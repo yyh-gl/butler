@@ -2,6 +2,8 @@ package butler
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"sync"
 )
 
@@ -34,18 +36,16 @@ func (b *butler) StartWorking(ctx context.Context) error {
 			for {
 				// TODO: error handling
 				if err := t.Action(ctx); err != nil {
-					wg.Done()
-					break
+					log.Print(fmt.Errorf("action error: %w", err))
 				}
 				if err := t.Notify(ctx); err != nil {
-					wg.Done()
-					break
+					log.Print(fmt.Errorf("notification error: %w", err))
 				}
 				if err := t.Rest(ctx); err != nil {
-					wg.Done()
-					break
+					log.Print(fmt.Errorf("rest error: %w", err))
 				}
 			}
+			wg.Done()
 		}()
 	}
 	wg.Wait()
